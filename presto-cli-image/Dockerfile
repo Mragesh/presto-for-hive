@@ -1,4 +1,4 @@
-FROM openjdk:8-slim
+FROM openjdk:11-slim
 
 # Install curl for the build process; will remove later.
 RUN apt-get update && apt-get install -y curl less --no-install-recommends \
