@@ -13,11 +13,11 @@ RUN curl https://repo1.maven.org/maven2/io/prestosql/presto-server/$PRESTO_VER/p
 	&& mkdir -p /opt/presto-server/etc/catalog
 
 # Copy only generic configs into image. All other configs should be later injected into the image.
-COPY jvm.config /opt/presto-server/etc/jvm.config
-COPY tpcds.properties /opt/presto-server/etc/catalog/tpcds.properties
-COPY memory.properties /opt/presto-server/etc/catalog/memory.properties
-COPY mysql.properties /opt/presto-server/etc/catalog/mysql.properties
+COPY configs/jvm.config /opt/presto-server/etc/jvm.config
+COPY configs/tpcds.properties /opt/presto-server/etc/catalog/tpcds.properties
+COPY configs/memory.properties /opt/presto-server/etc/catalog/memory.properties
+COPY configs/mysql.properties /opt/presto-server/etc/catalog/mysql.properties
 
 # Copy script to automatically generate the remaining configs at launch time.
-COPY autoconfig_and_launch.sh /opt/autoconfig_and_launch.sh
+COPY configs/autoconfig_and_launch.sh /opt/autoconfig_and_launch.sh
 RUN chmod a+x /opt/autoconfig_and_launch.sh
