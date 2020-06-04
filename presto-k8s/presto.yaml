@@ -26,19 +26,19 @@ spec:
     spec:
       containers:
       - name: metastore
-        image: joshuarobinson/fb-presto
+        image: mragesh/presto
         ports:
         - containerPort: 8080
         env:
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
             secretKeyRef:
-              name: irp210-s3-keys
+              name: my-s3-keys
               key: access-key
         - name: AWS_SECRET_ACCESS_KEY
           valueFrom:
             secretKeyRef:
-              name: irp210-s3-keys
+              name: my-s3-keys
               key: secret-key
         volumeMounts:
         - name: presto-cfg-vol
@@ -53,8 +53,8 @@ spec:
         command: ['/opt/autoconfig_and_launch.sh']
         resources:
           requests:
-            memory: "16G"
-            cpu: 4
+            memory: "8G"
+            cpu: 2
         imagePullPolicy: Always
       volumes:
         - name: presto-cfg-vol
@@ -66,7 +66,7 @@ kind: Deployment
 metadata:
   name: presto-worker
 spec:
-  replicas: 5
+  replicas: 3
   selector:
     matchLabels:
       app: presto-worker
@@ -79,19 +79,19 @@ spec:
     spec:
       containers:
       - name: metastore
-        image: joshuarobinson/fb-presto
+        image: mragesh/presto
         ports:
         - containerPort: 8080
         env:
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
             secretKeyRef:
-              name: irp210-s3-keys
+              name: my-s3-keys
               key: access-key
         - name: AWS_SECRET_ACCESS_KEY
           valueFrom:
             secretKeyRef:
-              name: irp210-s3-keys
+              name: my-s3-keys
               key: secret-key
         volumeMounts:
         - name: presto-cfg-vol
@@ -106,8 +106,8 @@ spec:
         command: ['/opt/autoconfig_and_launch.sh']
         resources:
           requests:
-            memory: "16G"
-            cpu: 4
+            memory: "2G"
+            cpu: 1 
         imagePullPolicy: Always
       volumes:
         - name: presto-cfg-vol
@@ -121,7 +121,7 @@ metadata:
 spec:
   containers:
   - name: presto-cli
-    image: joshuarobinson/presto-cli
+    image: mragesh/presto-cli
     command: ["tail", "-f", "/dev/null"]
     imagePullPolicy: Always
   restartPolicy: Always
